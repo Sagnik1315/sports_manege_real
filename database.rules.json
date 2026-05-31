@@ -1,0 +1,21 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+
+    "users": {
+        "$uid": {
+            ".read": "auth != null",
+            ".write": "auth != null && auth.uid == $uid"
+        }
+    },
+
+    "athletes": {
+      ".indexOn": ["uid"]
+    },
+
+    "coaches": {
+      ".indexOn": ["uid"]
+    }
+  }
+}
