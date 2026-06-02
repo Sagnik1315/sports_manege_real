@@ -13,6 +13,7 @@ export function Step3AddressDetails({ onNext, onBack }: Props) {
 
   const { register, handleSubmit, formState: { errors } } = useForm<AddressDetailsFormData>({
     resolver: zodResolver(addressDetailsSchema),
+    mode: "onBlur",
     defaultValues: { country: "India", ...formData.addressDetails } as AddressDetailsFormData,
   });
 

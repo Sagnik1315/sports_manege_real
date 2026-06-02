@@ -15,6 +15,7 @@ export function Step1PersonalDetails({ onNext }: Props) {
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<PersonalDetailsFormData>({
     resolver: zodResolver(personalDetailsSchema),
+    mode: "onBlur",
     defaultValues: formData.personalDetails as PersonalDetailsFormData,
   });
 
@@ -81,7 +82,7 @@ export function Step1PersonalDetails({ onNext }: Props) {
         </div>
         <div className="sm:col-span-2">
           <label className={labelClass}>Email Address *</label>
-          <input {...register("email")} type="email" placeholder="you@example.com" className={inputClass} />
+          <input {...register("email")} type="email" placeholder="name@mail.com" className={inputClass} />
           {errors.email && <p className={errorClass}>{errors.email.message}</p>}
         </div>
         <div>

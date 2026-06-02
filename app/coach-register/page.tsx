@@ -17,6 +17,7 @@ export default function CoachRegisterPage() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<CoachRegisterFormData>({
     resolver: zodResolver(coachRegisterSchema),
+    mode: "onBlur",
   });
 
  const onSubmit = async ({
@@ -80,7 +81,7 @@ export default function CoachRegisterPage() {
             </div>
             <div>
               <label className="text-sm font-medium text-slate-200 block mb-1.5">Email *</label>
-              <input {...register("email")} type="email" placeholder="coach@example.com" className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition" />
+              <input {...register("email")} type="email" placeholder="name@mail.com" className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition" />
               {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
             </div>
             <div>

@@ -21,6 +21,7 @@ export default function LoginPage() {
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    mode: "onBlur",
   });
 
  const onSubmit = async ({ email, password }: LoginFormData) => {
@@ -144,7 +145,7 @@ export default function LoginPage() {
               <input
                 {...register("email")}
                 type="email"
-                placeholder="you@example.com"
+                placeholder="name@mail.com"
                 className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
               {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}

@@ -11,6 +11,7 @@ export function Step1PersonalDetails({ onNext }: Props) {
   const { formData, setPersonalDetails } = useCoachRegistrationStore();
   const { register, handleSubmit, formState: { errors } } = useForm<CoachPersonalDetailsFormData>({
     resolver: zodResolver(coachPersonalDetailsSchema),
+    mode: "onBlur",
     defaultValues: formData.personalDetails as CoachPersonalDetailsFormData,
   });
 
@@ -30,7 +31,7 @@ export function Step1PersonalDetails({ onNext }: Props) {
       </div>
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-1">Email *</label>
-        <input {...register("email")} type="email" className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500" />
+        <input {...register("email")} type="email" placeholder="name@mail.com" className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500" />
         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
       </div>
       <div className="flex justify-end pt-4">

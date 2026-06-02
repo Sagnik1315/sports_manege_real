@@ -12,6 +12,7 @@ export function Step2GuardianDetails({ onNext, onBack }: Props) {
 
   const { register, handleSubmit, formState: { errors } } = useForm<GuardianDetailsFormData>({
     resolver: zodResolver(guardianDetailsSchema),
+    mode: "onBlur",
     defaultValues: formData.guardianDetails as GuardianDetailsFormData,
   });
 

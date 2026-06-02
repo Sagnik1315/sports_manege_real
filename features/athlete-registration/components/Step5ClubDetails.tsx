@@ -11,6 +11,7 @@ export function Step5ClubDetails({ onNext, onBack }: Props) {
   const { formData, setClubDetails } = useRegistrationStore();
   const { register, handleSubmit, formState: { errors } } = useForm<ClubDetailsFormData>({
     resolver: zodResolver(clubDetailsSchema),
+    mode: "onBlur",
     defaultValues: formData.clubDetails as ClubDetailsFormData,
   });
 

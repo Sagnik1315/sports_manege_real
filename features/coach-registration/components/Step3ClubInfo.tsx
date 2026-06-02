@@ -11,6 +11,7 @@ export function Step3ClubInfo({ onNext, onBack }: Props) {
   const { formData, setClubInfo } = useCoachRegistrationStore();
   const { register, handleSubmit, formState: { errors } } = useForm<CoachClubInfoFormData>({
     resolver: zodResolver(coachClubInfoSchema),
+    mode: "onBlur",
     defaultValues: formData.clubInfo as CoachClubInfoFormData,
   });
 

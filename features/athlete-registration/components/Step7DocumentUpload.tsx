@@ -19,6 +19,7 @@ const MANDATORY_DOCS = [
 ];
 
 const OPTIONAL_DOCS = [
+  { id: "insuranceCertificate", label: "Insurance Certificate", type: "image/", description: "Optional - JPG/PNG up to 2MB" },
   { id: "passport", label: "Passport", type: "image/", description: "Optional - JPG/PNG up to 2MB" },
   { id: "medicalCertificate", label: "Medical Certificate", type: "image/", description: "Optional - JPG/PNG up to 2MB" },
   { id: "previousCertificate", label: "Previous Competition Certificate", type: "image/", description: "Optional - JPG/PNG up to 2MB" },
@@ -94,7 +95,6 @@ export function Step7DocumentUpload({ onNext, onBack }: Props) {
         <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 shrink-0" />
         <p className="text-sm text-blue-700 leading-relaxed">
           Please upload clear scans of the required documents. Images will be automatically compressed. 
-          PDF files must be under 2MB.
         </p>
       </div>
 

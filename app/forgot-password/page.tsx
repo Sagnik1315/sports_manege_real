@@ -16,6 +16,7 @@ export default function ForgotPasswordPage() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
+    mode: "onBlur",
   });
 
   const onSubmit = async ({ email }: ForgotPasswordFormData) => {
@@ -57,7 +58,7 @@ export default function ForgotPasswordPage() {
                 <input
                   {...register("email")}
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="name@mail.com"
                   className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
                 {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}

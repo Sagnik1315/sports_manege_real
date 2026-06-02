@@ -12,6 +12,7 @@ export function Step6CompetitionDetails({ onNext, onBack }: Props) {
   const { formData, setCompetitionDetails } = useRegistrationStore();
   const { register, handleSubmit, formState: { errors } } = useForm<CompetitionDetailsFormData>({
     resolver: zodResolver(competitionDetailsSchema),
+    mode: "onBlur",
     defaultValues: formData.competitionDetails as CompetitionDetailsFormData,
   });
 
