@@ -21,26 +21,7 @@ The platform provides a complete workflow for athlete registration while allowin
 
 **Application:**
 https://sports-manege-real.vercel.app/
-
-**Admin Dashboard:**
-https://sports-manege-real.vercel.app/admin/athletes
-
 ---
-
-## Admin Credentials
-
-Email:
-
-```text
-admin@sportsclub.com
-```
-
-Password:
-
-```text
-Admin@123
-```
-
 ---
 
 ## Features
