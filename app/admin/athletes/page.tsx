@@ -39,6 +39,8 @@ export default function AdminAthletesPage() {
   const columns = useMemo(() => [
     columnHelper.accessor("athleteId", { header: "ID", cell: info => <span className="font-mono text-xs text-slate-500">{info.getValue()}</span> }),
     columnHelper.accessor("personalDetails.fullName", { header: "Name", cell: info => <span className="font-bold text-slate-900">{info.getValue()}</span> }),
+    columnHelper.accessor("personalDetails.mobile", { header: "Mobile", cell: info => <span className="text-sm font-medium">{info.getValue()}</span> }),
+    columnHelper.accessor("personalDetails.age", { header: "Age", cell: info => <span className="text-sm font-medium">{info.getValue()}</span> }),
     columnHelper.accessor("sportName", { header: "Sport" }),
     columnHelper.accessor("competitionDetails.ageGroup", { header: "Age Group" }),
     columnHelper.accessor("status", { header: "Status", cell: info => <StatusBadge status={info.getValue()} /> }),
@@ -112,7 +114,7 @@ export default function AdminAthletesPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <PageHeader title="Athlete Management" subtitle="Manage, review, and export all athlete applications." />
           <div className="flex items-center gap-2">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
+            <button onClick={exportCsv} className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
               <Download className="h-4 w-4" /> Export
             </button>
             {/* Add filter icon/modal here if needed */}
@@ -200,4 +202,35 @@ export default function AdminAthletesPage() {
       </div>
     </AdminLayout>
   );
+}
+
+function exportCsv() {
+  try {
+    // Access table via DOM because this helper is outside component scope — fallback: gather rows from window if needed
+    const tableElm: any = document.querySelector('table');
+    // Use data from React table previously rendered via component state isn't directly accessible here; instead recreate by reading DOM rows
+    const rows: string[] = [];
+    const headerCells = Array.from(tableElm.querySelectorAll('thead th')).map((th: any) => th.innerText.trim());
+    rows.push(headerCells.join(','));
+    const bodyRows = Array.from(tableElm.querySelectorAll('tbody tr'));
+    bodyRows.forEach((tr: any) => {
+      const cols = Array.from(tr.querySelectorAll('td')).map((td: any) => `"${td.innerText.replace(/"/g,'""')}"`);
+      rows.push(cols.join(','));
+    });
+
+    const csv = rows.join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `athletes_export_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error(err);
+    // fallback to toast if available
+    try { (window as any).sonner?.toast?.("Export failed"); } catch {}
+  }
 }

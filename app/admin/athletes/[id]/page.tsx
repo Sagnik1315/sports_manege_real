@@ -212,12 +212,7 @@ export default function AdminAthleteProfilePage() {
             {activeTab === "documents" && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-in zoom-in-95 duration-300">
                 {Object.entries(athlete.documents).map(([key, doc]) => (
-                  <a
-                    key={key}
-                    href={doc.storageUrl}
-                    target="_blank"
-                    className="p-5 border border-slate-200 rounded-2xl flex items-center justify-between hover:border-blue-500 hover:shadow-md transition group"
-                  >
+                  <div key={key} className="p-5 border border-slate-200 rounded-2xl flex items-center justify-between hover:border-blue-500 hover:shadow-md transition group">
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 group-hover:text-blue-600 transition">
                         <FileText className="h-5 w-5" />
@@ -227,8 +222,38 @@ export default function AdminAthleteProfilePage() {
                         <p className="text-xs font-medium text-slate-700 truncate max-w-[120px]">{doc.fileName}</p>
                       </div>
                     </div>
-                    <ExternalLink className="h-4 w-4 text-slate-300 group-hover:text-blue-600 transition" />
-                  </a>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={async () => {
+                          try {
+                            const resp = await fetch('/api/admin/download', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ athleteId: athlete.athleteId, docKey: key }),
+                            });
+                            if (!resp.ok) {
+                              const err = await resp.json().catch(() => ({ message: 'Download failed' }));
+                              toast.error(err.message || 'Unauthorized or file not found');
+                              return;
+                            }
+                            const json = await resp.json();
+                            const url = json.url || json.storageUrl;
+                            if (!url) {
+                              toast.error('File URL not available');
+                              return;
+                            }
+                            window.open(url, '_blank');
+                          } catch (e) {
+                            console.error(e);
+                            toast.error('Failed to download document');
+                          }
+                        }}
+                        className="p-2 bg-white rounded-md border text-slate-600 hover:bg-slate-50"
+                      >
+                        <ExternalLink className="h-4 w-4 text-slate-300 group-hover:text-blue-600 transition" />
+                      </button>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
